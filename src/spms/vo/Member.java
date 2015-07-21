@@ -18,7 +18,6 @@ public class Member {
 	
 	public Member setHeight(String height) {
 		this.height = height;
-	
 		return this;
 	}
 	
