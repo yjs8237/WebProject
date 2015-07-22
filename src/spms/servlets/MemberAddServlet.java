@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -28,6 +29,11 @@ public class MemberAddServlet extends HttpServlet{
 		response.setContentType("text/html; charset=utf-8");
 		PrintWriter out = response.getWriter();
 		
+		
+		RequestDispatcher rd = request.getRequestDispatcher("MemberForm.jsp");
+		rd.forward(request, response);
+		
+		/*
 		out.println("<html>");
 		out.println("<head><title>Register</title></head>");
 		out.println("<body><h1>회원등록</h1>");
@@ -41,6 +47,7 @@ public class MemberAddServlet extends HttpServlet{
 		out.println("<input type='reset' value='취소'>");
 		out.println("</from>");
 		out.println("</body></html>");	
+		*/
 		
 	}
 
@@ -97,9 +104,11 @@ public class MemberAddServlet extends HttpServlet{
 			*/
 		}catch(Exception e){
 			System.out.println(e.toString());
+			request.setAttribute("error", e.toString()); 
+			RequestDispatcher rd = request.getRequestDispatcher("/Error.jsp");
+			rd.include(request, response);
 		}finally {
 			try {
-				System.out.println("do Finally");
 				if(stmt!=null){stmt.close();}
 				if(rs!=null){rs.close();}
 			}catch(Exception e){

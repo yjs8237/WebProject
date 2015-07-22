@@ -29,7 +29,7 @@ public class LoginServelt extends HttpServlet{
 		// TODO Auto-generated method stub
 
 		// Get 요청이 들어오면 로그인 jsp 페이지로 화면을 위임한다.
-		RequestDispatcher rd = request.getRequestDispatcher("/auth/LoginForm.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("LoginForm.jsp");
 		rd.forward(request, response);
 	}
 
@@ -51,7 +51,7 @@ public class LoginServelt extends HttpServlet{
 				// Http 세션 객체를 가져온다.
 				HttpSession session = request.getSession();
 				session.setAttribute("member", member);
-				
+				System.out.println("로그인 성공");
 				//작업 결과를 리스트 화면으로 보낸다.
 				response.sendRedirect("../member/list");
 			} else {

@@ -7,6 +7,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebInitParam;
@@ -62,6 +63,9 @@ public class MemberDeleteServlet extends HttpServlet{
 			
 		}catch(Exception e){
 			System.out.println(e.toString());
+			request.setAttribute("error", e.toString());
+			RequestDispatcher rd = request.getRequestDispatcher("/Error.jsp");
+			rd.include(request, response);
 		}finally {
 			try {
 				if(stmt!=null){stmt.close();}

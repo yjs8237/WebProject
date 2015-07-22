@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebInitParam;
@@ -15,6 +16,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import spms.vo.Member;
 
 
 
@@ -52,6 +55,17 @@ public class MemberUpdateServlet extends HttpServlet{
 			response.setContentType("text/html; charset=euc-kr");
 			PrintWriter out = response.getWriter();
 			
+			Member member = new Member();
+			member.setNo(rs.getString("mno")).setEmail(rs.getString("email")).setHeight(rs.getString("height")).setName(rs.getString("name"))
+			.setPhonenum(rs.getString("phonenum"));
+			
+			request.setAttribute("member", member);
+			RequestDispatcher rd = request.getRequestDispatcher("MemberUpdateForm.jsp");
+			rd.forward(request, response);
+			
+			/*
+			 * 화면을 MemberUpdateForm.jsp 로 위임
+			 * 
 			out.println("<html><head><title>회원정보</title></head>");
 			out.println("<body><h1>List</h1>");
 			out.println("<form action='update' method='post'>");
@@ -63,9 +77,12 @@ public class MemberUpdateServlet extends HttpServlet{
 			out.println("<input type='button' value='취소' onclick='location.href=\"list\"'>");
 			out.println("</from>");
 			out.println("</body></html>");
-			
+			*/
 		}catch(Exception e){
 			System.out.println(e.toString());
+			request.setAttribute("error", e.toString());
+			RequestDispatcher rd = request.getRequestDispatcher("/Error.jsp");
+			rd.include(request, response);
 		}finally {
 			try {
 				if(stmt!=null){stmt.close();}
@@ -107,6 +124,9 @@ public class MemberUpdateServlet extends HttpServlet{
 			
 		}catch(Exception e){
 			System.out.println(e.toString());
+			request.setAttribute("error", e.toString());
+			RequestDispatcher rd = request.getRequestDispatcher("/Error.jsp");
+			rd.include(request, response);
 		}
 		
 	}

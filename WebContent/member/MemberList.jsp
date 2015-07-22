@@ -12,8 +12,13 @@
 <body>
 	<jsp:include page="/Header.jsp"></jsp:include>
 	<p><a href='add'>신규회원</a> </p>
+	<jsp:useBean id="members"
+					scope="request"
+					class="java.util.ArrayList"
+					type="java.util.ArrayList<spms.vo.Member>"></jsp:useBean>
 	<%
-		ArrayList <Member> members = (ArrayList<Member>)request.getAttribute("members");
+	// UseBean 사용
+		//ArrayList <Member> members = (ArrayList<Member>)request.getAttribute("members");
 		for(Member member : members){
 	%>
 	<%=member.getNo() %>
