@@ -15,7 +15,7 @@ public class AppInitServlet extends HttpServlet{
 		// TODO Auto-generated method stub
 		System.out.println("Ready fot Servlet Init..");
 		super.init(config);
-		
+		System.out.println("Discard Test");
 		try{
 			ServletContext sc = this.getServletContext();
 			Class.forName(sc.getInitParameter("driver"));
