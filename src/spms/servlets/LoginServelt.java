@@ -44,7 +44,6 @@ public class LoginServelt extends HttpServlet{
 			stmt.setString(1, request.getParameter("email"));
 			rs = stmt.executeQuery();
 			if(rs.next()){
-				System.out.println("로그인 존재");
 				
 				Member member = new Member().setEmail(rs.getString("email")).setHeight(rs.getString("height"))
 						.setName(rs.getString("name")).setNo(rs.getString("mno")).setPhonenum(rs.getString("phonenum"));

@@ -5,6 +5,7 @@
 <%
 	// JSP 내장 객체 session 을 통해서 member 객체를 가져온다.
 	Member member = (Member)session.getAttribute("member");
+	
 %>    
     
     

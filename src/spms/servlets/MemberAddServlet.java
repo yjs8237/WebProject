@@ -100,7 +100,6 @@ public class MemberAddServlet extends HttpServlet{
 		}finally {
 			try {
 				System.out.println("do Finally");
-				if(conn!=null){conn.close();}
 				if(stmt!=null){stmt.close();}
 				if(rs!=null){rs.close();}
 			}catch(Exception e){

@@ -68,7 +68,6 @@ public class MemberUpdateServlet extends HttpServlet{
 			System.out.println(e.toString());
 		}finally {
 			try {
-				if(conn!=null){conn.close();}
 				if(stmt!=null){stmt.close();}
 				if(rs!=null){rs.close();}
 			}catch(Exception e) {

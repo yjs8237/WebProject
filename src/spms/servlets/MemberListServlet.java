@@ -47,31 +47,30 @@ public class MemberListServlet extends HttpServlet{
 			
 			// InitAppServlet 에서 DB 커넥션 객체 연결
 			conn = (Connection)sc.getAttribute("conn");
-			
 			stmt = conn.createStatement();
 			String sql = "select * from study";
 			
 			rs = stmt.executeQuery(sql);
 			
 			response.setContentType("text/html; charset=euc-kr");
-			
+			System.out.println("1");
 			ArrayList<Member>members = new ArrayList<Member>();
-			
+			System.out.println("2");
 			while(rs.next()){
 				// Memeber 클래스에서 체이닝 방식을 지원하기 위해서, setter 메소드에서 this 자신의 객체를 리턴한다.
 				members.add(new Member().setNo(rs.getString("mno")).setName(rs.getString("name")).setHeight(rs.getString("height")).
 						setPhonenum(rs.getString("phonenum")).setEmail(rs.getString("email"))
 						);
 			}
+			System.out.println("3");
 			
 			
 			// request 에 회원목록 데이터를 보관한다.
 			request.setAttribute("members", members);
-			
+			System.out.println("4");
 			// JSP 로 출력을 위임한다.
 			RequestDispatcher rd = request.getRequestDispatcher("/member/MemberList.jsp");
 			rd.include(request, response);
-			
 			/*
 			PrintWriter out = response.getWriter();
 			
@@ -93,12 +92,12 @@ public class MemberListServlet extends HttpServlet{
 			out.println("</body></html>");
 			*/
 		}catch(Exception e){
-			request.setAttribute("error", e); 
+			System.out.println(e.toString());
+			request.setAttribute("error", e.toString()); 
 			RequestDispatcher rd = request.getRequestDispatcher("/Error.jsp");
 			rd.include(request, response);
 		}finally {
 			try {
-//				if(conn!=null){conn.close();}
 				if(stmt!=null){stmt.close();}
 				if(rs!=null){rs.close();}
 			}catch(Exception e){
