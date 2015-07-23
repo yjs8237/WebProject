@@ -83,7 +83,7 @@ public class MemberUpdateServlet extends HttpServlet{
 			request.setAttribute("error", e.toString());
 			RequestDispatcher rd = request.getRequestDispatcher("/Error.jsp");
 			rd.include(request, response);
-		}finally {
+		} finally {
 			try {
 				if(stmt!=null){stmt.close();}
 				if(rs!=null){rs.close();}

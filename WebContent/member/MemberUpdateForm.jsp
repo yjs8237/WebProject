@@ -10,15 +10,19 @@
 <title>Register</title>
 </head>
 <body>
+	<%
+		Member member = (Member)request.getAttribute("member");
+	%>
 	<jsp:include page="/Header.jsp"></jsp:include>
+	
 	<p>회원등록</p>
 	
 		<form action='add' method='post'>
-		번호:<input type='text' name='mno'><br>
-		이름:<input type='text' name='name'><br>
-		전화번호:<input type='text' name='number'><br>
-		키:<input type='text' name='height'><br>
-		이메일:<input type='text' name='email'><br>
+		번호:<input type='text' name='mno' value="<%=member.getNo() %>"><br>
+		이름:<input type='text' name='name' value="<%=member.getName() %>"><br>
+		전화번호:<input type='text' name='number' value="<%=member.getPhonenum() %>"><br>
+		키:<input type='text' name='height' value="<%=member.getHeight() %>"><br>
+		이메일:<input type='text' name='email' value="<%=member.getEmail() %>"><br>
 		<input type='submit' value='추가'>
 		<input type='reset' value='취소'>
 	</from>
