@@ -67,6 +67,7 @@ public class MemberListServlet extends HttpServlet{
 			// JSP 로 출력을 위임한다.
 			RequestDispatcher rd = request.getRequestDispatcher("/member/MemberList.jsp");
 			rd.include(request, response);
+			
 			/*
 			PrintWriter out = response.getWriter();
 			

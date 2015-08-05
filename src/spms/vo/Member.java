@@ -3,11 +3,11 @@ package spms.vo;
 import java.util.Date;
 
 public class Member {
-	protected String no;
-	protected String name;
-	protected String email;
-	protected String phonenum;
-	protected String height;
+	private String no;
+	private String name;
+	private String email;
+	private String phonenum;
+	private String height;
 	
 	protected Date createdDate;
 	protected Date modifiedDate;
