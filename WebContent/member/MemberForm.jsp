@@ -14,13 +14,13 @@
 	<p>회원등록</p>
 	
 		<form action='add' method='post'>
-		번호:<input type='text' name='mno'><br>
-		이름:<input type='text' name='name'><br>
-		전화번호:<input type='text' name='number'><br>
-		키:<input type='text' name='height'><br>
-		이메일:<input type='text' name='email'><br>
-		<input type='submit' value='추가'>
-		<input type='reset' value='취소'>
+		번호:<input type='text' name='mno' /><br>
+		이름:<input type='text' name='name'/><br>
+		전화번호:<input type='text' name='number'/><br>
+		키:<input type='text' name='height'/><br>
+		이메일:<input type='text' name='email'/><br>
+		<input type='submit' value='추가'/>
+		<input type='reset' value='취소'/>
 	</from>
 	
 

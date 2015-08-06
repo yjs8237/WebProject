@@ -16,6 +16,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import spms.dao.MemberDao;
+
 
 @WebServlet("/member/delete")
 public class MemberDeleteServlet extends HttpServlet{
@@ -39,12 +41,13 @@ public class MemberDeleteServlet extends HttpServlet{
 					this.getInitParameter("password") );
 			*/
 			conn = (Connection) sc.getAttribute("conn");
-			stmt = conn.createStatement();
 			String number = request.getParameter("no");
-			System.out.println(number);
-			String sql = "delete from study where phonenum = '" + number +"'";
-			System.out.println(sql);
-			stmt.executeUpdate(sql);
+			
+			MemberDao memberDao = new MemberDao();
+			memberDao.setConnection(conn);
+			
+			memberDao.delete(Integer.parseInt(number));
+
 			
 			response.sendRedirect("list");
 			

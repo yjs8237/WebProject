@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import spms.dao.MemberDao;
 import spms.vo.Member;
 
 
@@ -47,6 +48,11 @@ public class MemberListServlet extends HttpServlet{
 			
 			// InitAppServlet 에서 DB 커넥션 객체 연결
 			conn = (Connection)sc.getAttribute("conn");
+			
+			MemberDao memberDao = new MemberDao();
+			memberDao.setConnection(conn);
+			
+			/*
 			stmt = conn.createStatement();
 			String sql = "select * from study";
 			
@@ -60,10 +66,11 @@ public class MemberListServlet extends HttpServlet{
 						setPhonenum(rs.getString("phonenum")).setEmail(rs.getString("email"))
 						);
 			}
-			
+			*/
 			
 			// request 에 회원목록 데이터를 보관한다.
-			request.setAttribute("members", members);
+			request.setAttribute("members", memberDao.selectList());
+			response.setContentType("text/html; charset=utf-8");
 			// JSP 로 출력을 위임한다.
 			RequestDispatcher rd = request.getRequestDispatcher("/member/MemberList.jsp");
 			rd.include(request, response);

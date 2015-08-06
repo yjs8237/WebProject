@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import spms.dao.MemberDao;
 import spms.vo.Member;
 
 
@@ -33,51 +34,20 @@ public class MemberUpdateServlet extends HttpServlet{
 		// TODO Auto-generated method stub
 		try{
 			ServletContext sc = this.getServletContext();
-			/*
-			Class.forName(sc.getInitParameter("driver"));
-			conn = DriverManager.getConnection(sc.getInitParameter("url"),sc.getInitParameter("username"), sc.getInitParameter("password"));
-			*/
-			/*
-			Class.forName(this.getInitParameter("driver"));
-			conn = DriverManager.getConnection(this.getInitParameter("url"), this.getInitParameter("username"),
-					this.getInitParameter("password") );
-			*/
 			
 			conn = (Connection)sc.getAttribute("conn");
 			
-			stmt = conn.createStatement();
 			String number = request.getParameter("no");
-			System.out.println(number);
-			String sql = "select * from study where mno = '" + number +"'";
-			System.out.println(sql);
-			rs = stmt.executeQuery(sql);
-			rs.next();
-			response.setContentType("text/html; charset=euc-kr");
-			PrintWriter out = response.getWriter();
+			MemberDao memberDao = new MemberDao();
 			
-			Member member = new Member();
-			member.setNo(rs.getString("mno")).setEmail(rs.getString("email")).setHeight(rs.getString("height")).setName(rs.getString("name"))
-			.setPhonenum(rs.getString("phonenum"));
+			memberDao.setConnection(conn);
+			Member member = memberDao.selectOne(Integer.parseInt(number));
+			
 			
 			request.setAttribute("member", member);
 			RequestDispatcher rd = request.getRequestDispatcher("MemberUpdateForm.jsp");
 			rd.forward(request, response);
 			
-			/*
-			 * 화면을 MemberUpdateForm.jsp 로 위임
-			 * 
-			out.println("<html><head><title>회원정보</title></head>");
-			out.println("<body><h1>List</h1>");
-			out.println("<form action='update' method='post'>");
-			out.println("get으로 받은 num : <input type='text' name='mno' value='"+request.getParameter("no")+"' readonly><br>");
-			out.println("이름 : <input type='text' name='name' value='"+rs.getString("name")+"'readonly'><br>");
-			out.println("핸드폰 : <input type='text' name='phonenum' value='"+rs.getString("phonenum")+"'readonly'><br>");
-			out.println("키 : <input type='text' name='height' value='"+rs.getString("height")+"'readonly'><br>");
-			out.println("<input type='submit' value='저장'>");
-			out.println("<input type='button' value='취소' onclick='location.href=\"list\"'>");
-			out.println("</from>");
-			out.println("</body></html>");
-			*/
 		}catch(Exception e){
 			System.out.println(e.toString());
 			request.setAttribute("error", e.toString());
@@ -99,10 +69,10 @@ public class MemberUpdateServlet extends HttpServlet{
 		// TODO Auto-generated method stub
 		ServletContext sc = this.getServletContext();
 		// PostGre 의 인코딩 타입과 맞춰서 euc-kr 로 셋팅했음..
-		request.setCharacterEncoding("euc-kr");
+//		request.setCharacterEncoding("euc-kr");
 		try{
-			Class.forName(sc.getInitParameter("driver"));
-			conn = DriverManager.getConnection(sc.getInitParameter("url"),sc.getInitParameter("username"), sc.getInitParameter("password"));
+			
+			conn = (Connection)sc.getAttribute("conn");
 			
 			System.out.println(request.getParameter("name"));
 			System.out.println(request.getParameter("phonenum"));
@@ -110,15 +80,16 @@ public class MemberUpdateServlet extends HttpServlet{
 			System.out.println(request.getParameter("email"));
 			System.out.println(request.getParameter("mno"));
 			
-			String sql = "UPDATE study SET name=?, height=?, phonenum=?, email=?, mno=? WHERE mno = ? ";
-			Preparestmt = conn.prepareStatement(sql);
-			Preparestmt.setString(1, request.getParameter("name"));
-			Preparestmt.setString(2, request.getParameter("height"));
-			Preparestmt.setString(3, request.getParameter("phonenum"));
-			Preparestmt.setString(4, request.getParameter("email"));
-			Preparestmt.setString(5, request.getParameter("mno"));
-			Preparestmt.setString(6, request.getParameter("mno"));
-			Preparestmt.executeUpdate();
+			
+			Member member = new Member();
+			member.setNo(request.getParameter("mno")).setName(request.getParameter("name")).setPhonenum(request.getParameter("phonenum"))
+			.setHeight(request.getParameter("height")).setEmail(request.getParameter("email"));
+			
+			MemberDao memberDao = new MemberDao();
+			memberDao.setConnection(conn);
+			
+			memberDao.update(member);
+			
 			// 작업결과를 출력하지 않고 다른 페이지 출력
 			response.sendRedirect("list");
 			

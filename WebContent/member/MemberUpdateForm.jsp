@@ -19,10 +19,10 @@
 	
 	<p>회원등록</p>
 	
-		<form action='add' method='post'>
-		번호:<input type='text' name='mno' value='${requestScope.member.no }'><br>
+		<form action='update' method='post'>
+		번호:<input type='text' name='mno' value='${requestScope.member.no }' readonly ><br>
 		이름:<input type='text' name='name' value='${requestScope.member.name }'><br>
-		전화번호:<input type='text' name='number' value='${requestScope.member.phonenum }'><br>
+		전화번호:<input type='text' name='phonenum' value='${requestScope.member.phonenum }'><br>
 		키:<input type='text' name='height' value='${requestScope.member.height }'><br>
 		이메일:<input type='text' name='email' value='${requestScope.member.email }'><br>
 		<input type='submit' value='추가'>

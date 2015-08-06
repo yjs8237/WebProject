@@ -21,7 +21,7 @@
 	 <c:forEach var="member" items="${members }">
 	 	${member.no }, 
 	 	<a href="update?no=${member.no }">${member.name }</a>,
-	 	${member.email },
+	 	${member.height }, ${member.phonenum }, ${member.email },
 	 	<a href="delete?no=${member.no }">[삭제]</a> <br>
 	 </c:forEach>
 

@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import spms.dao.MemberDao;
 import spms.vo.Member;
 
 @WebServlet("/auth/login")
@@ -40,14 +41,13 @@ public class LoginServelt extends HttpServlet{
 		try{
 			ServletContext sc = this.getServletContext();
 			conn = (Connection) sc.getAttribute("conn");
-			stmt = conn.prepareStatement("SELECT *  from study where email=?");
-			stmt.setString(1, request.getParameter("email"));
-			rs = stmt.executeQuery();
-			if(rs.next()){
-				
-				Member member = new Member().setEmail(rs.getString("email")).setHeight(rs.getString("height"))
-						.setName(rs.getString("name")).setNo(rs.getString("mno")).setPhonenum(rs.getString("phonenum"));
-				
+			
+			MemberDao memberDao = new MemberDao();
+			memberDao.setConnection(conn);
+			
+			Member member = memberDao.exist(request.getParameter("email")); 
+			
+			if(member != null){
 				// Http 세션 객체를 가져온다.
 				HttpSession session = request.getSession();
 				session.setAttribute("member", member);
@@ -59,6 +59,7 @@ public class LoginServelt extends HttpServlet{
 				RequestDispatcher rd = request.getRequestDispatcher("/auth/LoginFail.jsp");
 				rd.forward(request, response);
 			}
+			
 			
 		}catch(Exception e){
 			System.out.println(e.toString());
