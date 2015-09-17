@@ -85,31 +85,13 @@ public class MemberAddServlet extends HttpServlet{
 			
 			memberDao.insert(member);
 			
-			/*
-			String sql = "insert into study (name , height , phonenum, email,mno) values (?,?,?,?,?)";
-			stmt = conn.prepareStatement(sql);
-			stmt.setString(1, request.getParameter("name"));
-			stmt.setString(2, request.getParameter("height"));
-			stmt.setString(3, request.getParameter("number"));
-			stmt.setString(4, request.getParameter("email"));
-			stmt.setString(5, request.getParameter("mno"));
-			stmt.executeUpdate();
-			*/
 			// 작업결과를 출력하지 않고 다른 페이지 출력
 			response.sendRedirect("list");
 			
-			/*
-			response.setContentType("text/html; charset=utf-8");
-			PrintWriter out = response.getWriter();
-			
-			out.println("<html><head><title>결과</title></head>");
-			out.println("<body>");
-			out.println("<p>성공</p>");
-			out.println("</body></html>");
 			
 			// 1초후 /member url 호출
-			response.addHeader("Refresh", "1;url=../member");
-			*/
+//			response.addHeader("Refresh", "1;url=../member");
+			
 		}catch(Exception e){
 			System.out.println(e.toString());
 			request.setAttribute("error", e.toString()); 

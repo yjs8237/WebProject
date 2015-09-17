@@ -16,6 +16,7 @@ public class MemberDao {
 	
 	public void setConnection(Connection conn){
 		this.connection = conn;
+		System.out.println();
 	}
 	
 	public List<Member> selectList() throws Exception {
