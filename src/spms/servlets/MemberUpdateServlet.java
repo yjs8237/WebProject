@@ -35,12 +35,14 @@ public class MemberUpdateServlet extends HttpServlet{
 		try{
 			ServletContext sc = this.getServletContext();
 			
-			conn = (Connection)sc.getAttribute("conn");
+//			conn = (Connection)sc.getAttribute("conn");
 			
 			String number = request.getParameter("no");
-			MemberDao memberDao = new MemberDao();
+//			MemberDao memberDao = new MemberDao();
 			
-			memberDao.setConnection(conn);
+//			memberDao.setConnection(conn);
+			
+			MemberDao memberDao = (MemberDao) sc.getAttribute("memberDao");
 			Member member = memberDao.selectOne(Integer.parseInt(number));
 			
 			

@@ -40,11 +40,13 @@ public class LoginServelt extends HttpServlet{
 		// TODO Auto-generated method stub
 		try{
 			ServletContext sc = this.getServletContext();
-			conn = (Connection) sc.getAttribute("conn");
+//			conn = (Connection) sc.getAttribute("conn");
 			
-			MemberDao memberDao = new MemberDao();
-			memberDao.setConnection(conn);
+//			MemberDao memberDao = new MemberDao();
+//			memberDao.setConnection(conn);
 			
+			
+			MemberDao memberDao = (MemberDao) sc.getAttribute("memberDao");
 			Member member = memberDao.exist(request.getParameter("email")); 
 			
 			if(member != null){

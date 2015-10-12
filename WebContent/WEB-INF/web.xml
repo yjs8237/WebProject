@@ -56,13 +56,15 @@ id="WebApp_ID" version="3.0">
 	<param-value>jsyun0415</param-value>
 </context-param>
 
+
+<!-- 웹 어플리케이션이 최초 구동될 때, 서블릿 요청이 없더라도 서블릿이 실행될 수 있도록 설정 -->
+<!-- 
 <servlet>
 	<servlet-name>AppInitServlet</servlet-name>
 	<servlet-class>spms.servlets.AppInitServlet</servlet-class>
-	<!-- 웹 어플리케이션이 최초 구동될 때, 서블릿 요청이 없더라도 서블릿이 실행될 수 있도록 설정 -->
 	<load-on-startup>1</load-on-startup>
 </servlet>
-
+-->
   <servlet>
 		<servlet-name>MemberUpdateServlet</servlet-name>
 		<servlet-class>spms.servlets.MemberUpdateServlet</servlet-class>

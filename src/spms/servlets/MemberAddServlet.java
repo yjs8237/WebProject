@@ -77,13 +77,16 @@ public class MemberAddServlet extends HttpServlet{
 			member.setNo(request.getParameter("mno"));
 			
 			// InitAppServlet 에서 DB 커넥션 객체 연결
-			conn = (Connection)sc.getAttribute("conn");
+//			conn = (Connection)sc.getAttribute("conn");
 			
 			
-			MemberDao memberDao = new MemberDao();
-			memberDao.setConnection(conn);
+//			MemberDao memberDao = new MemberDao();
+//			memberDao.setConnection(conn);
+			
+			MemberDao memberDao = (MemberDao)sc.getAttribute("memberDao");
 			
 			memberDao.insert(member);
+			
 			
 			// 작업결과를 출력하지 않고 다른 페이지 출력
 			response.sendRedirect("list");

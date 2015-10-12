@@ -40,11 +40,14 @@ public class MemberDeleteServlet extends HttpServlet{
 			conn = DriverManager.getConnection(this.getInitParameter("url"), this.getInitParameter("username"),
 					this.getInitParameter("password") );
 			*/
-			conn = (Connection) sc.getAttribute("conn");
+//			conn = (Connection) sc.getAttribute("conn");
 			String number = request.getParameter("no");
 			
-			MemberDao memberDao = new MemberDao();
-			memberDao.setConnection(conn);
+//			MemberDao memberDao = new MemberDao();
+//			memberDao.setConnection(conn);
+			
+			MemberDao memberDao = (MemberDao)sc.getAttribute("memberDao");
+			
 			
 			memberDao.delete(Integer.parseInt(number));
 

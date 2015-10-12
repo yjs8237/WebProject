@@ -27,9 +27,6 @@ public class MemberListServlet extends HttpServlet{
 	private Statement stmt;
 	private ResultSet rs;
 	
-	
-
-
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -40,11 +37,13 @@ public class MemberListServlet extends HttpServlet{
 			
 			
 			// InitAppServlet 에서 DB 커넥션 객체 연결
-			conn = (Connection)sc.getAttribute("conn");
+//			conn = (Connection)sc.getAttribute("conn");
+//			MemberDao memberDao = new MemberDao();
 			
-			MemberDao memberDao = new MemberDao();
+			MemberDao memberDao = (MemberDao)sc.getAttribute("memberDao");
 			
-			memberDao.setConnection(conn);
+			// ContextLoaderListener 클래스에서 Connection 처리
+//			memberDao.setConnection(conn);
 			
 		
 			// request 에 회원목록 데이터를 보관한다.
