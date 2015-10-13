@@ -5,6 +5,12 @@ xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" 
 id="WebApp_ID" version="3.0">
   <display-name>web03</display-name>
+  
+  <resource-ref>
+  	<res-ref-name>jdbc/studydb</res-ref-name>
+  	<res-type>javax.sql.DataSource</res-type>
+  	<res-auth>Container</res-auth>
+  </resource-ref>
 
 
 <!-- 
@@ -55,6 +61,7 @@ id="WebApp_ID" version="3.0">
 	<param-name>password</param-name>
 	<param-value>jsyun0415</param-value>
 </context-param>
+
 
 
 <!-- 웹 어플리케이션이 최초 구동될 때, 서블릿 요청이 없더라도 서블릿이 실행될 수 있도록 설정 -->

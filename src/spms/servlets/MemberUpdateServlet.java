@@ -74,7 +74,7 @@ public class MemberUpdateServlet extends HttpServlet{
 //		request.setCharacterEncoding("euc-kr");
 		try{
 			
-			conn = (Connection)sc.getAttribute("conn");
+//			conn = (Connection)sc.getAttribute("conn");
 			
 			System.out.println(request.getParameter("name"));
 			System.out.println(request.getParameter("phonenum"));
@@ -84,12 +84,18 @@ public class MemberUpdateServlet extends HttpServlet{
 			
 			
 			Member member = new Member();
+			
+			
+			
 			member.setNo(request.getParameter("mno")).setName(request.getParameter("name")).setPhonenum(request.getParameter("phonenum"))
 			.setHeight(request.getParameter("height")).setEmail(request.getParameter("email"));
 			
+			/*
 			MemberDao memberDao = new MemberDao();
 			memberDao.setConnection(conn);
+			*/
 			
+			MemberDao memberDao = (MemberDao)sc.getAttribute("memberDao");
 			memberDao.update(member);
 			
 			// 작업결과를 출력하지 않고 다른 페이지 출력

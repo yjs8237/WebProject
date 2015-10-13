@@ -1,6 +1,8 @@
 package spms.util;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class DBConnectionPool {
@@ -24,8 +26,22 @@ public class DBConnectionPool {
 			if(conn.isValid(10)){
 				return conn;
 			}
-		} else {
-			
+		} 
+			return DriverManager.getConnection(url, username, password);
+	}
+	
+	public void returnConnection (Connection conn){
+		connList.add(conn);
+	}
+	
+	public void closeAll(){
+		for (Connection conn : connList) {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 	

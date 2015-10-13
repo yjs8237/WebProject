@@ -1,28 +1,47 @@
 package spms.dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.sql.DataSource;
+
+
+
+
+import spms.util.DBConnectionPool;
 import spms.vo.Member;
 
 public class MemberDao {
 	
 	Connection connection;
-	
+//	DBConnectionPool connPool;
+	DataSource ds;
+	/*
 	public void setConnection(Connection conn){
 		this.connection = conn;
 		System.out.println();
+	}
+	*/
+	
+//	public void setDBConnectionPool (DBConnectionPool connPool){
+//		this.connPool = connPool;
+//	}
+	
+	
+	public void setDataSource (DataSource dataSource){
+		this.ds = dataSource;
 	}
 	
 	public List<Member> selectList() throws Exception {
 		Statement stmt = null;
 		ResultSet rs = null;
 		ArrayList<Member> list = new ArrayList<Member>();
+		
+		
+		
+//		connection = connPool.getConnection();
+		connection = ds.getConnection();
 		stmt = connection.createStatement();
 		
 		String sql = "select * from study";
@@ -40,6 +59,7 @@ public class MemberDao {
 		} finally {
 			if(stmt!=null){stmt.cancel();}
 			if(rs!=null){rs.close();}
+//			if(connection != null){connPool.returnConnection(connection);}
 		}
 		
 		return list;
@@ -50,6 +70,7 @@ public class MemberDao {
 		String sql = "insert into study (name , height , phonenum, email,mno) values (?,?,?,?,?)";
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
+		connection = ds.getConnection();
 		try{
 			stmt = connection.prepareStatement(sql);
 			stmt.setString(1, member.getName());
@@ -74,7 +95,7 @@ public class MemberDao {
 	public Member selectOne(int no) throws Exception{
 		Statement stmt = null;
 		ResultSet rs = null;
-		
+		connection = ds.getConnection();
 		String sql = "select * from study where mno = '" + String.valueOf(no) +"'";
 		stmt = connection.createStatement();
 		rs = stmt.executeQuery(sql);
@@ -92,7 +113,7 @@ public class MemberDao {
 	
 	public int update(Member member) throws Exception{
 		PreparedStatement Preparestmt = null;
-		
+		connection = ds.getConnection();
 		try{
 			System.out.println("###");
 			System.out.println(member.getNo());
@@ -121,7 +142,9 @@ public class MemberDao {
 	
 	public int delete (int no){
 		Statement stmt = null;
+		
 		try{
+			connection = ds.getConnection();
 			stmt = connection.createStatement();
 			String sql = "delete from study where mno = '" + String.valueOf(no) +"'";
 			System.out.println(sql);
@@ -139,6 +162,7 @@ public class MemberDao {
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		try{
+			connection = ds.getConnection();
 			String sql = "SELECT *  from study where email=?";
 			stmt = connection.prepareStatement(sql);
 			stmt.setString(1, email);
