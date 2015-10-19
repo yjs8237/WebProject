@@ -73,11 +73,11 @@ public class MemberDao {
 		connection = ds.getConnection();
 		try{
 			stmt = connection.prepareStatement(sql);
-			stmt.setString(1, member.getName());
-			stmt.setString(2, member.getHeight());
-			stmt.setString(3, member.getPhonenum());
-			stmt.setString(4, member.getEmail());
-			stmt.setString(5, member.getNo());
+			stmt.setString(1, member.getName()!= null ? member.getName() : "null");
+			stmt.setString(2, member.getHeight() != null ? member.getHeight() : "null");
+			stmt.setString(3, member.getPhonenum() != null ? member.getPhonenum() : "null");
+			stmt.setString(4, member.getEmail() != null ? member.getEmail() : "null");
+			stmt.setString(5, member.getNo() != null ? member.getNo() : "null");
 			stmt.executeUpdate();
 			
 			return 1;
