@@ -21,7 +21,7 @@ import spms.dao.MemberDao;
 import spms.vo.Member;
 
 
-
+@WebServlet("/member/update")
 public class MemberUpdateServlet extends HttpServlet{
 	private Connection conn;
 	private PreparedStatement Preparestmt;
@@ -35,21 +35,19 @@ public class MemberUpdateServlet extends HttpServlet{
 		try{
 			ServletContext sc = this.getServletContext();
 			
-//			conn = (Connection)sc.getAttribute("conn");
-			
 			String number = request.getParameter("no");
-//			MemberDao memberDao = new MemberDao();
-			
-//			memberDao.setConnection(conn);
 			
 			MemberDao memberDao = (MemberDao) sc.getAttribute("memberDao");
 			Member member = memberDao.selectOne(Integer.parseInt(number));
 			
-			
+			System.out.println("update view");
 			request.setAttribute("member", member);
+			request.setAttribute("viewUrl", "/member/MemberUpdateForm.jsp");
+			
+			/*
 			RequestDispatcher rd = request.getRequestDispatcher("MemberUpdateForm.jsp");
 			rd.forward(request, response);
-			
+			*/
 		}catch(Exception e){
 			System.out.println(e.toString());
 			request.setAttribute("error", e.toString());
@@ -98,11 +96,13 @@ public class MemberUpdateServlet extends HttpServlet{
 			MemberDao memberDao = (MemberDao)sc.getAttribute("memberDao");
 			memberDao.update(member);
 			
+			
+			request.setAttribute("viewUrl", "redirect:list.do");
 			// 작업결과를 출력하지 않고 다른 페이지 출력
-			response.sendRedirect("list");
+//			response.sendRedirect("list");
 			
 		}catch(Exception e){
-			System.out.println(e.toString());
+			System.out.println( e.toString());
 			request.setAttribute("error", e.toString());
 			RequestDispatcher rd = request.getRequestDispatcher("/Error.jsp");
 			rd.include(request, response);

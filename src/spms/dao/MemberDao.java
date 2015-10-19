@@ -115,12 +115,11 @@ public class MemberDao {
 		PreparedStatement Preparestmt = null;
 		connection = ds.getConnection();
 		try{
-			System.out.println("###");
-			System.out.println(member.getNo());
-			System.out.println(member.getName());
-			System.out.println(member.getEmail());
-			System.out.println(member.getHeight());
-			System.out.println(member.getPhonenum());
+//			System.out.println(member.getNo());
+//			System.out.println(member.getName());
+//			System.out.println(member.getEmail());
+//			System.out.println(member.getHeight());
+//			System.out.println(member.getPhonenum());
 			String sql = "UPDATE study SET name=?, height=?, phonenum=?, email=? WHERE mno = ? ";
 			Preparestmt = connection.prepareStatement(sql);
 			Preparestmt.setString(1, member.getName());

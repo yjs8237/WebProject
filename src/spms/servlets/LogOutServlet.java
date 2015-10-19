@@ -19,8 +19,9 @@ public class LogOutServlet extends HttpServlet {
 		
 		HttpSession session = request.getSession();
 		session.invalidate();
-		
-		response.sendRedirect("login");
+		System.out.println("LogOutServlet doGet");
+		request.setAttribute("viewUrl", "redirect:login.do");
+//		response.sendRedirect("login");
 	}
 	
 

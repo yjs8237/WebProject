@@ -10,6 +10,11 @@
 <body>
 <p> Login Fail!! Please make sure your E-mail address. <br>
 You can put E-maill address a few secondes later.
-</p>
+</p><br>
+	
+<form action="../auth/login.do">
+<input type='submit' value='재 로그인'/>
+</form>
+
 </body>
 </html>

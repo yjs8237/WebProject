@@ -28,10 +28,11 @@ public class LoginServelt extends HttpServlet{
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-
+		System.out.println("LoginServelt Get 호출");
 		// Get 요청이 들어오면 로그인 jsp 페이지로 화면을 위임한다.
-		RequestDispatcher rd = request.getRequestDispatcher("LoginForm.jsp");
-		rd.forward(request, response);
+		request.setAttribute("viewUrl", "LoginForm.jsp");
+//		RequestDispatcher rd = request.getRequestDispatcher("LoginForm.jsp");
+//		rd.forward(request, response);
 	}
 
 	@Override
@@ -54,12 +55,15 @@ public class LoginServelt extends HttpServlet{
 				HttpSession session = request.getSession();
 				session.setAttribute("member", member);
 				System.out.println("로그인 성공");
+				request.setAttribute("viewUrl", "redirect:../member/list.do");
 				//작업 결과를 리스트 화면으로 보낸다.
-				response.sendRedirect("../member/list");
+//				response.sendRedirect("../member/list");
 			} else {
 				System.out.println("로그인 실패");
-				RequestDispatcher rd = request.getRequestDispatcher("/auth/LoginFail.jsp");
-				rd.forward(request, response);
+				request.setAttribute("viewUrl", "/auth/LoginFail.jsp");
+				
+//				RequestDispatcher rd = request.getRequestDispatcher("/auth/LoginFail.jsp");
+//				rd.forward(request, response);
 			}
 			
 			

@@ -43,29 +43,14 @@ public class MemberDeleteServlet extends HttpServlet{
 //			conn = (Connection) sc.getAttribute("conn");
 			String number = request.getParameter("no");
 			
-//			MemberDao memberDao = new MemberDao();
-//			memberDao.setConnection(conn);
-			
 			MemberDao memberDao = (MemberDao)sc.getAttribute("memberDao");
 			
 			
 			memberDao.delete(Integer.parseInt(number));
 
+			request.setAttribute("viewUrl", "redirect:list.do");
+//			response.sendRedirect("list");
 			
-			response.sendRedirect("list");
-			
-			/*
-			response.setContentType("text/html; charset=utf-8");
-			PrintWriter out = response.getWriter();
-			
-			out.println("<html><head><title>결과</title></head>");
-			out.println("<body>");
-			out.println("<p>성공</p>");
-			out.println("</body></html>");
-			
-			// 1초후 /member url 호출
-			response.addHeader("Refresh", "1;url=list");
-			*/
 			
 		}catch(Exception e){
 			System.out.println(e.toString());

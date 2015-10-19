@@ -13,7 +13,7 @@
 	<jsp:include page="/Header.jsp"></jsp:include>
 	<p>회원등록</p>
 	
-		<form action='add' method='post'>
+		<form action='add.do' method='post'>
 		번호:<input type='text' name='mno' /><br>
 		이름:<input type='text' name='name'/><br>
 		전화번호:<input type='text' name='number'/><br>

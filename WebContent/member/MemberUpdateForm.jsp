@@ -19,7 +19,7 @@
 	
 	<p>회원등록</p>
 	
-		<form action='update' method='post'>
+		<form action='update.do' method='post'>
 		번호:<input type='text' name='mno' value='${requestScope.member.no }' readonly ><br>
 		이름:<input type='text' name='name' value='${requestScope.member.name }'><br>
 		전화번호:<input type='text' name='phonenum' value='${requestScope.member.phonenum }'><br>

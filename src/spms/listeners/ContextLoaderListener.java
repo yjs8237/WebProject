@@ -42,6 +42,7 @@ public class ContextLoaderListener implements ServletContextListener{
 			ServletContext sc = Evt.getServletContext();
 			
 			InitialContext initialContext = new InitialContext();
+			// 톰캣 서버 context.xml 파일에 설정 정보를 읽어온다.
 			DataSource ds = (DataSource) initialContext.lookup("java:comp/env/jdbc/studydb");
 			
 //			Class.forName(sc.getInitParameter("driver"));

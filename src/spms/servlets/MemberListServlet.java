@@ -48,16 +48,21 @@ public class MemberListServlet extends HttpServlet{
 		
 			// request 에 회원목록 데이터를 보관한다.
 			request.setAttribute("members", memberDao.selectList());
+			request.setAttribute("viewUrl", "/member/MemberList.jsp");
+			/*
 			response.setContentType("text/html; charset=utf-8");
 			// JSP 로 출력을 위임한다.
 			RequestDispatcher rd = request.getRequestDispatcher("/member/MemberList.jsp");
 			rd.include(request, response);
-			
+			*/
 		}catch(Exception e){
 			System.out.println(e.toString());
+			throw new ServletException(e);
+			/*
 			request.setAttribute("error", e.toString()); 
 			RequestDispatcher rd = request.getRequestDispatcher("/Error.jsp");
 			rd.include(request, response);
+			*/
 		}finally {
 			try {
 				if(stmt!=null){stmt.close();}
