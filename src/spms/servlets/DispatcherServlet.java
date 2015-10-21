@@ -12,8 +12,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import spms.controls.Controller;
+import spms.controls.LogInController;
 import spms.controls.MemberAddController;
+import spms.controls.MemberDeleteController;
 import spms.controls.MemberListController;
+import spms.controls.MemberUpdateController;
 import spms.vo.Member;
 
 @WebServlet("*.do")
@@ -22,6 +25,7 @@ public class DispatcherServlet extends HttpServlet{
 	@Override
 	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		
 		// TODO Auto-generated method stub
 		ServletContext sc = this.getServletContext();
 		response.setContentType("text/html; charset=UTF-8");
@@ -31,7 +35,7 @@ public class DispatcherServlet extends HttpServlet{
 		HashMap<String, Object> model = new HashMap<String, Object>();
 		model.put("memberDao", sc.getAttribute("memberDao"));
 		
-		
+		 
 		try{
 			
 			String pageControllerPath = null;
@@ -41,10 +45,11 @@ public class DispatcherServlet extends HttpServlet{
 			if(servletPath.equals("/member/list.do")){
 //				pageControllerPath = "/member/list";
 				pageController = new MemberListController();
+				System.out.println("/member/list.do");
 				
 			} else if(servletPath.equals("/member/add.do")){
 //				pageControllerPath = "/member/add";
-				pageController = new MemberAddController();
+				pageController = new MemberAddController(); 
 				
 				if(request.getParameter("email") != null){
 					model.put("member", new Member().setEmail(request.getParameter("email"))
@@ -55,34 +60,41 @@ public class DispatcherServlet extends HttpServlet{
 							);
 				}
 				
-				
 			} else if(servletPath.equals("/member/update.do")){
-				pageControllerPath = "/member/update";
-				if(request.getParameter("email") != null){
-					request.setAttribute("member", new Member()
-					.setNo(request.getParameter("no"))
-					.setEmail(request.getParameter("email"))
-					.setName(request.getParameter("name")));
-				}
+				pageController = new MemberUpdateController();
+				if(request.getParameter("no") != null) {
+					System.out.println("The Number to update : " + request.getParameter("no"));
+					model.put("Number",request.getParameter("no"));
+				} 
+				
 			} else if(servletPath.equals("/member/delete.do")) {
-				pageControllerPath = "/member/delete";
+				pageController = new MemberDeleteController(); 
+				if(request.getParameter("no") != null) {
+					System.out.println("The Number to delete : " + request.getParameter("no"));
+					model.put("Number",request.getParameter("no"));
+				}
 			} else if(servletPath.equals("/auth/login.do")) {
-				pageControllerPath = "/auth/login";
+				pageController = new LogInController();
+				if(request.getParameter("email") != null){
+					System.out.println(request.getParameter("email"));
+					model.put("session" , request.getSession());
+					model.put("email", request.getParameter("email"));
+				} 
 			} else if(servletPath.equals("/auth/logout.do")) {
 				pageControllerPath = "/auth/logout";
 			}
 			
 			
 			/*
-			RequestDispatcher rd = request.getRequestDispatcher(pageControllerPath);
-			System.out.println("path : " + pageControllerPath);
-			rd.include(request, response);
-			
-			String viewUrl = (String) request.getAttribute("viewUrl");
+				RequestDispatcher rd = request.getRequestDispatcher(pageControllerPath);
+				System.out.println("path : " + pageControllerPath);
+				rd.include(request, response);
+				 
+				String viewUrl = (String) request.getAttribute("viewUrl");
 			*/
 			
 			String viewUrl = pageController.excute(model);
-			
+			System.out.println("Return URL : " + viewUrl);
 			
 			for (String key : model.keySet()) {
 				request.setAttribute(key, model.get(key));
@@ -97,6 +109,7 @@ public class DispatcherServlet extends HttpServlet{
 			}
 			
 		}catch(Exception e){
+			e.printStackTrace();
 			System.out.println("Exception " + e.toString());
 			request.setAttribute("error", e.toString()); 
 			RequestDispatcher rd = request.getRequestDispatcher("/Error.jsp");

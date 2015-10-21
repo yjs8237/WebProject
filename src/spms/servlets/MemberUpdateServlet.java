@@ -41,9 +41,11 @@ public class MemberUpdateServlet extends HttpServlet{
 			Member member = memberDao.selectOne(Integer.parseInt(number));
 			
 			System.out.println("update view");
+			
+			/*
 			request.setAttribute("member", member);
 			request.setAttribute("viewUrl", "/member/MemberUpdateForm.jsp");
-			
+			*/
 			/*
 			RequestDispatcher rd = request.getRequestDispatcher("MemberUpdateForm.jsp");
 			rd.forward(request, response);
@@ -82,8 +84,6 @@ public class MemberUpdateServlet extends HttpServlet{
 			
 			
 			Member member = new Member();
-			
-			
 			
 			member.setNo(request.getParameter("mno")).setName(request.getParameter("name")).setPhonenum(request.getParameter("phonenum"))
 			.setHeight(request.getParameter("height")).setEmail(request.getParameter("email"));

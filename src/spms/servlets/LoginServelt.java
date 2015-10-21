@@ -28,11 +28,10 @@ public class LoginServelt extends HttpServlet{
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		System.out.println("LoginServelt Get 호출");
 		// Get 요청이 들어오면 로그인 jsp 페이지로 화면을 위임한다.
 		request.setAttribute("viewUrl", "LoginForm.jsp");
-//		RequestDispatcher rd = request.getRequestDispatcher("LoginForm.jsp");
-//		rd.forward(request, response);
+		RequestDispatcher rd = request.getRequestDispatcher("LoginForm.jsp");
+		rd.forward(request, response);
 	}
 
 	@Override
