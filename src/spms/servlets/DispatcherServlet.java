@@ -10,9 +10,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import spms.controls.Controller;
 import spms.controls.LogInController;
+import spms.controls.LogOutController;
 import spms.controls.MemberAddController;
 import spms.controls.MemberDeleteController;
 import spms.controls.MemberListController;
@@ -35,7 +37,12 @@ public class DispatcherServlet extends HttpServlet{
 		HashMap<String, Object> model = new HashMap<String, Object>();
 		model.put("memberDao", sc.getAttribute("memberDao"));
 		
-		 
+		HttpSession session = (HttpSession)request.getSession();
+		
+		if(session.getAttribute("member") != null){
+			model.put("session", session);
+		}
+		
 		try{
 			
 			String pageControllerPath = null;
@@ -45,7 +52,6 @@ public class DispatcherServlet extends HttpServlet{
 			if(servletPath.equals("/member/list.do")){
 //				pageControllerPath = "/member/list";
 				pageController = new MemberListController();
-				System.out.println("/member/list.do");
 				
 			} else if(servletPath.equals("/member/add.do")){
 //				pageControllerPath = "/member/add";
@@ -65,7 +71,7 @@ public class DispatcherServlet extends HttpServlet{
 				if(request.getParameter("no") != null) {
 					System.out.println("The Number to update : " + request.getParameter("no"));
 					model.put("Number",request.getParameter("no"));
-				} 
+				}  
 				
 			} else if(servletPath.equals("/member/delete.do")) {
 				pageController = new MemberDeleteController(); 
@@ -73,15 +79,15 @@ public class DispatcherServlet extends HttpServlet{
 					System.out.println("The Number to delete : " + request.getParameter("no"));
 					model.put("Number",request.getParameter("no"));
 				}
-			} else if(servletPath.equals("/auth/login.do")) {
+			} else if(servletPath.equals("/auth/login.do")) {  
 				pageController = new LogInController();
 				if(request.getParameter("email") != null){
 					System.out.println(request.getParameter("email"));
-					model.put("session" , request.getSession());
+					model.put("session" , request.getSession()); 
 					model.put("email", request.getParameter("email"));
 				} 
 			} else if(servletPath.equals("/auth/logout.do")) {
-				pageControllerPath = "/auth/logout";
+				pageController = new LogOutController();
 			}
 			
 			
@@ -96,7 +102,7 @@ public class DispatcherServlet extends HttpServlet{
 			String viewUrl = pageController.excute(model);
 			System.out.println("Return URL : " + viewUrl);
 			
-			for (String key : model.keySet()) {
+			for (String key : model.keySet()) { 
 				request.setAttribute(key, model.get(key));
 			}
 			

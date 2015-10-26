@@ -1,0 +1,6 @@
+<WatchedResource>WEB-INF/web.xml</WatchedResource>
+	<Resource name="jdbc/studydb" auth="Container" type="javax.sql.DataSource" maxActive="10" maxIdle="3" maxWait="10000"
+	username="postgres" password="jsyun0415"
+	driverClassName="org.postgresql.Driver" 
+	url="jdbc:postgresql://localhost:5432/sam"
+	closeMethod="close"></Resource>

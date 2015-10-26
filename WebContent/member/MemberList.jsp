@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c" %>
+<%@ page import="spms.vo.Member" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -17,7 +18,11 @@
 					class="java.util.ArrayList"
 					type="java.util.ArrayList<spms.vo.Member>"></jsp:useBean>
 	 -->
-	 	 
+	 <%
+	 	Member member = (Member) session.getAttribute("member");
+	 %>
+	 <%= member.getName() %>
+	 <br>
 	 <c:forEach var="member" items="${members }">
 	 	${member.no }, 
 	 	<a href="update.do?no=${member.no }">${member.name }</a>,

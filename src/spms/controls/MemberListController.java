@@ -2,18 +2,34 @@ package spms.controls;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import spms.dao.MemberDao;
+import spms.vo.Member;
 
 public class MemberListController implements Controller{
 
+	MemberDao memberDao;
+	public MemberListController setMemberDao (MemberDao memberDao){
+		this.memberDao = memberDao;
+		return this;
+	}
+	
 	@Override
 	public String excute(Map<String, Object> model) throws Exception {
 		// TODO Auto-generated method stub
-		System.out.println("MemberListController");
-		MemberDao memberDao = (MemberDao)model.get("memberDao");
-		System.out.println("memberdao");
+		
+		
 		model.put("members", memberDao.selectList());
-		System.out.println("ListController Finish");
+		
+		HttpSession session = (HttpSession)model.get("session");
+		if(session!=null){
+			Member member = (Member)session.getAttribute("member");
+			System.out.println(member.getName());
+		}else {
+			System.out.println("## Session is Null ## ");
+		}
+		
 		return "/member/MemberList.jsp";
 	}
 

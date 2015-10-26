@@ -8,8 +8,8 @@
 		class="spms.vo.Member" >
 </jsp:useBean>
 <%
-	// Usebean 사용
-	// JSP 내장 객체 session 을 통해서 member 객체를 가져온다.
+	 //Usebean 사용
+	 //JSP 내장 객체 session 을 통해서 member 객체를 가져온다.
 	//Member member = (Member)session.getAttribute("member");
 	
 %>    
@@ -18,7 +18,6 @@
     	SPMS(Simple Project Management System)
     	<span style="float:right;">
 			
-			${member.name }
     		<% if(member.getNo() != null) {%>
     		<%=member.getName() %>
     		<a style="color:white;" href="<%request.getContextPath();%>../auth/logout.do"> 로그아웃</a>
