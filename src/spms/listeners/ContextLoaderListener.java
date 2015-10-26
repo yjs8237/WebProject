@@ -13,6 +13,12 @@ import javax.sql.DataSource;
 
 import org.apache.tomcat.dbcp.dbcp.BasicDataSource;
 
+import spms.controls.LogInController;
+import spms.controls.LogOutController;
+import spms.controls.MemberAddController;
+import spms.controls.MemberDeleteController;
+import spms.controls.MemberListController;
+import spms.controls.MemberUpdateController;
 import spms.dao.MemberDao;
 import spms.util.DBConnectionPool;
 
@@ -45,33 +51,21 @@ public class ContextLoaderListener implements ServletContextListener{
 			// 톰캣 서버 context.xml 파일에 설정 정보를 읽어온다.
 			DataSource ds = (DataSource) initialContext.lookup("java:comp/env/jdbc/studydb");
 			
-//			Class.forName(sc.getInitParameter("driver"));
-//			conn = DriverManager.getConnection(
-//					sc.getInitParameter("url"),
-//					sc.getInitParameter("username"),
-//					sc.getInitParameter("password")
-//			);
-			
-//			connPool = new DBConnectionPool(
-//					sc.getInitParameter("url"), 
-//					sc.getInitParameter("username"),
-//					sc.getInitParameter("password"),
-//					sc.getInitParameter("driver")
-//					);
-			
-//			ds = new BasicDataSource();
-//			ds.setDriverClassName(sc.getInitParameter("driver"));
-//			ds.setUrl(sc.getInitParameter("url"));
-//			ds.setUsername(sc.getInitParameter("username"));
-//			ds.setPassword(sc.getInitParameter("password"));
-			
 			MemberDao memberDao = new MemberDao();
 			memberDao.setDataSource(ds);
 
-//			memberDao.setDBConnectionPool(connPool);
-//			memberDao.setConnection(conn);
 			
-			sc.setAttribute("memberDao", memberDao);
+//			sc.setAttribute("memberDao", memberDao);
+			sc.setAttribute("/auth/login.do", new LogInController().setMemberDao(memberDao));
+			sc.setAttribute("/auth/logout.do", new LogOutController());
+			sc.setAttribute("/member/list.do", new MemberListController().setMemberDao(memberDao));
+			sc.setAttribute("/member/add.do", new MemberAddController().setMemberDao(memberDao));
+			sc.setAttribute("member/update.do", new MemberUpdateController().setMemberDao(memberDao));
+			sc.setAttribute("/member/delete.do", new MemberDeleteController().setMemberDao(memberDao));
+			
+			
+			
+			
 			
 		} catch (Exception e){
 			

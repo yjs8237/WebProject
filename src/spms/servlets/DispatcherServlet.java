@@ -35,27 +35,23 @@ public class DispatcherServlet extends HttpServlet{
 		String servletPath = request.getServletPath();
 		
 		HashMap<String, Object> model = new HashMap<String, Object>();
-		model.put("memberDao", sc.getAttribute("memberDao"));
+//		model.put("memberDao", sc.getAttribute("memberDao"));
 		
 		HttpSession session = (HttpSession)request.getSession();
-		
 		if(session.getAttribute("member") != null){
 			model.put("session", session);
 		}
 		
+		Controller pageController = (Controller) sc.getAttribute(servletPath);
+		
 		try{
 			
 			String pageControllerPath = null;
-			Controller pageController = null;
 			
 			
 			if(servletPath.equals("/member/list.do")){
-//				pageControllerPath = "/member/list";
-				pageController = new MemberListController();
 				
 			} else if(servletPath.equals("/member/add.do")){
-//				pageControllerPath = "/member/add";
-				pageController = new MemberAddController(); 
 				
 				if(request.getParameter("email") != null){
 					model.put("member", new Member().setEmail(request.getParameter("email"))
@@ -67,27 +63,24 @@ public class DispatcherServlet extends HttpServlet{
 				}
 				
 			} else if(servletPath.equals("/member/update.do")){
-				pageController = new MemberUpdateController();
 				if(request.getParameter("no") != null) {
 					System.out.println("The Number to update : " + request.getParameter("no"));
 					model.put("Number",request.getParameter("no"));
 				}  
 				
 			} else if(servletPath.equals("/member/delete.do")) {
-				pageController = new MemberDeleteController(); 
 				if(request.getParameter("no") != null) {
 					System.out.println("The Number to delete : " + request.getParameter("no"));
 					model.put("Number",request.getParameter("no"));
 				}
 			} else if(servletPath.equals("/auth/login.do")) {  
-				pageController = new LogInController();
 				if(request.getParameter("email") != null){
 					System.out.println(request.getParameter("email"));
 					model.put("session" , request.getSession()); 
 					model.put("email", request.getParameter("email"));
 				} 
 			} else if(servletPath.equals("/auth/logout.do")) {
-				pageController = new LogOutController();
+				
 			}
 			
 			
