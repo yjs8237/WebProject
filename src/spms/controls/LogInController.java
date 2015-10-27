@@ -1,13 +1,15 @@
 package spms.controls;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import spms.bind.DataBinding;
 import spms.dao.MemberDao;
 import spms.vo.Member;
 
-public class LogInController implements Controller{
+public class LogInController implements Controller, DataBinding{
 	
 	MemberDao memberDao;
 	
@@ -19,11 +21,10 @@ public class LogInController implements Controller{
 	@Override
 	public String excute(Map<String, Object> model) throws Exception {
 		// TODO Auto-generated method stub
-		if(model.get("email") != null){
-			String email = (String) model.get("email");
+		if(model.get("loginInfo") != null){
+			Member member = (Member) model.get("loginInfo");
+			member = memberDao.exist(member.getEmail());
 			
-			Member member = memberDao.exist(email);
-			System.out.println("member = " + member);
 			if(member != null){
 				HttpSession session = (HttpSession) model.get("session");
 				if(session == null){
@@ -35,7 +36,7 @@ public class LogInController implements Controller{
 				System.out.println("로그인 성공");
 				return "redirect:../member/list.do";
 			} else {
-				System.out.println("E-mail 을 입력해주세요.");
+				System.out.println("로그인 시도 !!");
 				return "/auth/LoginForm.jsp";
 			}
 			
@@ -45,5 +46,14 @@ public class LogInController implements Controller{
 		}
 		
 	}
+
+	@Override
+	public Object[] getDataBinders() {
+		// TODO Auto-generated method stub
+		return new Object[] {
+			"loginInfo" , spms.vo.Member.class
+		};
+	}
+
 
 }

@@ -2,10 +2,11 @@ package spms.controls;
 
 import java.util.Map;
 
+import spms.bind.DataBinding;
 import spms.dao.MemberDao;
 import spms.vo.Member;
 
-public class MemberUpdateController implements Controller{
+public class MemberUpdateController implements Controller, DataBinding{
 	MemberDao memberDao;
 	
 	public MemberUpdateController setMemberDao (MemberDao memberDao){
@@ -25,6 +26,14 @@ public class MemberUpdateController implements Controller{
 		} else {
 			return "redirect:list.do";
 		}
+	}
+
+	@Override
+	public Object[] getDataBinders() {
+		// TODO Auto-generated method stub
+		return new Object[] {
+			"no" , Integer.class , "member" , spms.vo.Member.class	
+		};
 	}
 
 }

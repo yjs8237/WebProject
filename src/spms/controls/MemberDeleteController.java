@@ -2,9 +2,11 @@ package spms.controls;
 
 import java.util.Map;
 
+import spms.bind.DataBinding;
 import spms.dao.MemberDao;
+import spms.vo.Member;
 
-public class MemberDeleteController implements Controller{
+public class MemberDeleteController implements Controller, DataBinding{
 
 	MemberDao memberDao;
 	
@@ -16,14 +18,24 @@ public class MemberDeleteController implements Controller{
 	@Override
 	public String excute(Map<String, Object> model) throws Exception {
 		// TODO Auto-generated method stub
-		if(model.get("Number") != null){
-			
-			memberDao.delete(Integer.parseInt((String)model.get("Number")));
+		Member member = (Member)model.get("deleteInfo");
+		if(member != null){
+			memberDao.delete(Integer.parseInt(member.getNo()));
 			return "redirect:list.do";
 		} else {
 			return "redirect:list.do";
 		}
 		
 	}
+
+	@Override
+	public Object[] getDataBinders() {
+		// TODO Auto-generated method stub
+		return new Object[] {
+			"no" , Integer.class
+		};
+	}
+
+	
 
 }

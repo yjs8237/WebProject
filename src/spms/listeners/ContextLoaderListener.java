@@ -20,6 +20,7 @@ import spms.controls.MemberDeleteController;
 import spms.controls.MemberListController;
 import spms.controls.MemberUpdateController;
 import spms.dao.MemberDao;
+import spms.dao.PostgreMemberDao;
 import spms.util.DBConnectionPool;
 
 // 리스너 등록 어노테이션
@@ -51,7 +52,8 @@ public class ContextLoaderListener implements ServletContextListener{
 			// 톰캣 서버 context.xml 파일에 설정 정보를 읽어온다.
 			DataSource ds = (DataSource) initialContext.lookup("java:comp/env/jdbc/studydb");
 			
-			MemberDao memberDao = new MemberDao();
+//			MemberDao memberDao = new MemberDao();
+			PostgreMemberDao memberDao = new PostgreMemberDao();
 			memberDao.setDataSource(ds);
 
 			

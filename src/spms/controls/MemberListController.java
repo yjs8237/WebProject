@@ -25,7 +25,7 @@ public class MemberListController implements Controller{
 		HttpSession session = (HttpSession)model.get("session");
 		if(session!=null){
 			Member member = (Member)session.getAttribute("member");
-			System.out.println(member.getName());
+//			System.out.println(member.getName());
 		}else {
 			System.out.println("## Session is Null ## ");
 		}
