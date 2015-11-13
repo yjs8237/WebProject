@@ -2,10 +2,13 @@ package spms.controls;
 
 import java.util.Map;
 
+import spms.annotation.Component;
 import spms.bind.DataBinding;
 import spms.dao.MemberDao;
 import spms.vo.Member;
 
+
+@Component("/member/update.do")
 public class MemberUpdateController implements Controller, DataBinding{
 	MemberDao memberDao;
 	
@@ -17,8 +20,9 @@ public class MemberUpdateController implements Controller, DataBinding{
 	@Override
 	public String excute(Map<String, Object> model) throws Exception {
 		// TODO Auto-generated method stub
-		if(model.get("Number") != null){
-			int no = Integer.parseInt((String)model.get("Number")) ;
+		
+		if(model.get("no") != null){
+			int no = (Integer)model.get("no") ;
 			Member member = memberDao.selectOne(no);
 			memberDao.update(member);
 			model.put("member", member);

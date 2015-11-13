@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 
 import spms.bind.DataBinding;
 import spms.bind.ServletrequestDataBinder;
+import spms.context.ApplicationContext;
 import spms.controls.Controller;
 import spms.controls.LogInController;
 import spms.controls.LogOutController;
@@ -21,6 +22,7 @@ import spms.controls.MemberAddController;
 import spms.controls.MemberDeleteController;
 import spms.controls.MemberListController;
 import spms.controls.MemberUpdateController;
+import spms.listeners.ContextLoaderListener;
 import spms.vo.Member;
 
 @WebServlet("*.do")
@@ -29,13 +31,15 @@ public class DispatcherServlet extends HttpServlet{
 	@Override
 	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+		 
 		// TODO Auto-generated method stub
-		ServletContext sc = this.getServletContext();
-		response.setContentType("text/html; charset=UTF-8");
+//		ServletContext sc = this.getServletContext();
+		ApplicationContext ctx = ContextLoaderListener.getApplicationContext();
+		
+		response.setContentType("text/html; charset=UTF-8"); 
 		
 		String servletPath = request.getServletPath();
-		
+		 
 		HashMap<String, Object> model = new HashMap<String, Object>();
 //		model.put("memberDao", sc.getAttribute("memberDao"));
 		
@@ -48,8 +52,9 @@ public class DispatcherServlet extends HttpServlet{
 		
 		model.put("session", request.getSession());
 		
-		Controller pageController = (Controller) sc.getAttribute(servletPath);
-		
+//		Controller pageController = (Controller) sc.getAttribute(servletPath);
+		System.out.println("servletPath -> " + servletPath);
+		Controller pageController = (Controller) ctx.getBean(servletPath);
 		try{
 			if(pageController instanceof DataBinding){
 				prepareRequestData(request , model, (DataBinding)pageController);

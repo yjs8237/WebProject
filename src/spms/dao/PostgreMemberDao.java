@@ -9,25 +9,16 @@ import javax.sql.DataSource;
 
 
 
+import spms.annotation.Component;
 import spms.util.DBConnectionPool;
 import spms.vo.Member;
 
+
+@Component("memberDao")
 public class PostgreMemberDao implements MemberDao{
 	
 	Connection connection;
-//	DBConnectionPool connPool;
 	DataSource ds;
-	/*
-	public void setConnection(Connection conn){
-		this.connection = conn;
-		System.out.println();
-	}
-	*/
-	
-//	public void setDBConnectionPool (DBConnectionPool connPool){
-//		this.connPool = connPool;
-//	}
-	
 	
 	public void setDataSource (DataSource dataSource){
 		this.ds = dataSource;

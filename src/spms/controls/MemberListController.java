@@ -4,9 +4,12 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import spms.annotation.Component;
 import spms.dao.MemberDao;
 import spms.vo.Member;
 
+
+@Component("/member/list.do")
 public class MemberListController implements Controller{
 
 	MemberDao memberDao;
