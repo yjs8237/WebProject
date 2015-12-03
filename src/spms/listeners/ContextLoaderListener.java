@@ -1,9 +1,11 @@
 package spms.listeners;
 
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import javax.annotation.Resource;
 import javax.naming.InitialContext;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
@@ -12,6 +14,10 @@ import javax.servlet.annotation.WebListener;
 import javax.sql.DataSource;
 
 import org.apache.tomcat.dbcp.dbcp.BasicDataSource;
+import org.apache.ibatis.*;
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import spms.context.ApplicationContext;
 import spms.controls.LogInController;
@@ -54,32 +60,31 @@ public class ContextLoaderListener implements ServletContextListener{
 	public void contextInitialized(ServletContextEvent Evt) {
 		// TODO Auto-generated method stub
 		try{
+			appContext = new ApplicationContext();
+			
+			String resource = "spms/dao/mybatis-config.xml";
+			InputStream inputstream = Resources.getResourceAsStream(resource);
+			
+			SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputstream);
+			
+			appContext.addBean("sqlSessionFactory", sqlSessionFactory);
+			
 			ServletContext sc = Evt.getServletContext();
 			
+			String propertiesPath = sc.getRealPath(sc.getInitParameter("contextConfigLocation"));
+			
+			appContext.prepareObjectsByProperties(propertiesPath);
+			appContext.prepareObjectsByAnnotation("");
+			appContext.injectDependency();
+			
+			
+			/*
+			ServletContext sc = Evt.getServletContext();
 			String propertiesPath = sc.getRealPath(sc.getInitParameter("contextConfigLocation"));
 			System.out.println("App 최초 구동");
 			System.out.println("propertiesPath -> " + propertiesPath);
 			appContext = new ApplicationContext(propertiesPath);
-			System.out.println("appContext is null ? " + appContext == null);
-			
-			/*
-			InitialContext initialContext = new InitialContext();
-			// 톰캣 서버 context.xml 파일에 설정 정보를 읽어온다.
-			DataSource ds = (DataSource) initialContext.lookup("java:comp/env/jdbc/studydb");
-			
-//			MemberDao memberDao = new MemberDao();
-			PostgreMemberDao memberDao = new PostgreMemberDao();
-			memberDao.setDataSource(ds);
-			
-//			sc.setAttribute("memberDao", memberDao);
-			sc.setAttribute("/auth/login.do", new LogInController().setMemberDao(memberDao));
-			sc.setAttribute("/auth/logout.do", new LogOutController());
-			sc.setAttribute("/member/list.do", new MemberListController().setMemberDao(memberDao));
-			sc.setAttribute("/member/add.do", new MemberAddController().setMemberDao(memberDao));
-			sc.setAttribute("/member/update.do", new MemberUpdateController().setMemberDao(memberDao));
-			sc.setAttribute("/member/delete.do", new MemberDeleteController().setMemberDao(memberDao));
 			*/
-			
 			
 			
 		} catch (Exception e){

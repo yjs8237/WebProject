@@ -9,6 +9,7 @@ import spms.vo.Member;
 
 @Component("/member/add.do")
 public class MemberAddController implements Controller, DataBinding{
+	
 	MemberDao memberDao;
 	
 	public MemberAddController setMemberDao (MemberDao memberDao){

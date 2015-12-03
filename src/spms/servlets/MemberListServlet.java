@@ -47,7 +47,7 @@ public class MemberListServlet extends HttpServlet{
 			
 		
 			// request 에 회원목록 데이터를 보관한다.
-			request.setAttribute("members", memberDao.selectList());
+//			request.setAttribute("members", memberDao.selectList());
 			request.setAttribute("viewUrl", "/member/MemberList.jsp");
 			/*
 			response.setContentType("text/html; charset=utf-8");

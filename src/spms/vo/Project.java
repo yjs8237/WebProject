@@ -9,12 +9,13 @@ public class Project {
 	protected Date startDate;	//시작일
 	protected Date endDate;		//종료일
 	protected int state;		//상태
-	protected Date createDate;	//생산일
+	protected Date createdDate;	//생산일
 	protected String tags;		//태그들
 	public int getNo() {
 		return no;
 	}
 	public Project setNo(int no) {
+		System.out.println("set No is invoked!! " + no);
 		this.no = no;
 		return this;
 	}
@@ -36,7 +37,7 @@ public class Project {
 		return startDate;
 	}
 	public Project setStartDate(Date startDate) {
-		this.startDate = startDate;
+		this.startDate =startDate;
 		return this;
 	}
 	public Date getEndDate() {
@@ -53,11 +54,11 @@ public class Project {
 		this.state = state;
 		return this;
 	}
-	public Date getCreateDate() {
-		return createDate;
+	public Date getCreatedDate() {
+		return createdDate;
 	}
-	public Project setCreateDate(Date createDate) {
-		this.createDate = createDate;
+	public Project setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
 		return this;
 	}
 	public String getTags() {

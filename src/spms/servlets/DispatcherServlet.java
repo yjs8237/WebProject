@@ -39,34 +39,23 @@ public class DispatcherServlet extends HttpServlet{
 		response.setContentType("text/html; charset=UTF-8"); 
 		
 		String servletPath = request.getServletPath();
-		 
+		  
 		HashMap<String, Object> model = new HashMap<String, Object>();
-//		model.put("memberDao", sc.getAttribute("memberDao"));
-		
-		/*
-		HttpSession session = (HttpSession)request.getSession();
-		if(session.getAttribute("member") != null){
-			model.put("session", session);
-		}
-		*/
-		
 		model.put("session", request.getSession());
 		
-//		Controller pageController = (Controller) sc.getAttribute(servletPath);
 		System.out.println("servletPath -> " + servletPath);
 		Controller pageController = (Controller) ctx.getBean(servletPath);
+		
 		try{
 			if(pageController instanceof DataBinding){
 				prepareRequestData(request , model, (DataBinding)pageController);
 			}
 			
-			
 			String viewUrl = pageController.excute(model);
-			System.out.println("Return URL : " + viewUrl);
 			
 			for (String key : model.keySet()) {  
 				request.setAttribute(key, model.get(key));
-			}
+			} 
 			
 			if(viewUrl.startsWith("redirect:")){
 				response.sendRedirect(viewUrl.substring(9));
@@ -84,16 +73,14 @@ public class DispatcherServlet extends HttpServlet{
 			rd.include(request, response);
 		}  
 		 
-		
-//		super.service(arg0, arg1); 
-	}
+	}   
 	
 	private void prepareRequestData(HttpServletRequest request , HashMap<String, Object> model, DataBinding dataBinding) throws Exception{
 		Object[] dataBinders = dataBinding.getDataBinders();
-		String dataName = "";
-		Class<?> dataType = null;
-		Object dataObj = null;
-		
+		String dataName = ""; 
+		Class<?> dataType = null; 
+		Object dataObj = null; 
+		 
 		for (int i = 0; i < dataBinders.length; i+=2) { 
 			dataName = dataBinders[i].toString();
 			dataType = (Class<?>)dataBinders[i+1];

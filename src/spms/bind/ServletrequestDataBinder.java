@@ -1,8 +1,8 @@
 package spms.bind;
 
 import java.lang.reflect.Method;
-import java.sql.Date;
-import java.util.Set;
+import java.util.*;
+
 
 import javax.servlet.ServletRequest;
 
@@ -20,9 +20,9 @@ public class ServletrequestDataBinder {
 		
 		
 		for (String paramName : paramNames) {
-			System.out.println("dataType : " + dataType + " , paramName : " + paramName);
 			m = findSetter(dataType, paramName);
 			if(m != null){
+				System.out.println("dataTyep : " + m.getParameterTypes()[0] + " Value : " + request.getParameter(paramName));
 				m.invoke(obj, createValueObject(m.getParameterTypes()[0], request.getParameter(paramName)));
 			}
 		}

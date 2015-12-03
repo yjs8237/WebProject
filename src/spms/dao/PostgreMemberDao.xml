@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="spms.dao.MemberDao">
+
+  <resultMap type="member" id="memberResultMap">
+    <id column="MNO" property="no"/>
+    <result column="NAME"    property="name"/>
+    <result column="HEIGHT"  property="height"/>
+    <result column="PHONENUM" property="phonenum" />
+    <result column="EMAIL" property="email" />
+  </resultMap>
+  
+  <select id="selectList" parameterType="map" resultMap="memberResultMap">
+	  select MNO, NAME, HEIGHT, PHONENUM, EMAIL
+	  from STUDY
+	  order by 
+		<choose>
+			<when test="orderCond == 'MNO_ASC'"> MNO ASC</when>
+			<when test="orderCond == 'MNO_DESC'"> MNO DESC</when>
+			<when test="orderCond == 'NAME_ASC'"> NAME ASC</when>
+			<when test="orderCond == 'NAME_DESC'"> NAME DESC</when>
+			<when test="orderCond == 'HEIGHT_ASC'"> HEIGHT ASC</when>
+			<when test="orderCond == 'HEIGHT_DESC'"> HEIGHT DESC</when>
+			<when test="orderCond == 'PHONENUM_ASC'"> PHONENUM ASC</when>
+			<when test="orderCond == 'PHONENUM_DESC'"> PHONENUM DESC</when>
+			<when test="orderCond == 'EMAIL_ASC'"> EMAIL ASC</when>
+			<when test="orderCond == 'EMAIL_DESC'"> EMAIL DESC</when>
+			<otherwise>MNO DESC</otherwise>
+		</choose>
+  </select>
+  
+  <insert id="insert" parameterType="member">
+    insert into STUDY(MNO,NAME,HEIGHT,PHONENUM,EMAIL)
+    values (#{no},#{name},#{height},#{phonenum},#{email})
+  </insert>
+  
+  <select id="selectOne" parameterType="int" resultMap="memberResultMap">
+    select *
+    from STUDY 
+    where MNO=#{value}
+  </select>
+  
+   <select id="exist" parameterType="map" resultMap="memberResultMap">
+    select *
+    from STUDY 
+    where EMAIL=#{email}
+  </select>
+  
+  <update id="update" parameterType="map">
+    update STUDY
+    <set>
+		<if test="name != null">NAME=#{name},</if>
+      	<if test="height != null">HEIGHT=#{height},</if>
+      	<if test="phonenum != null">PHONENUM=#{phonenum},</if>
+      	<if test="email != null">EMAIL=#{email}</if>
+    </set>
+    where MNO=#{no}
+  </update>
+  
+  <delete id="delete" parameterType="int">
+    delete from STUDY 
+    where MNO=#{value}
+  </delete>
+</mapper>

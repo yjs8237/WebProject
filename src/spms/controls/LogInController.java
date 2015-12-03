@@ -27,6 +27,13 @@ public class LogInController implements Controller, DataBinding{
 		// TODO Auto-generated method stub
 		if(model.get("loginInfo") != null){
 			Member member = (Member) model.get("loginInfo");
+			if(member == null){
+				System.out.println("member is null");
+			} 
+			if(member.getEmail() == null){
+				System.out.println("email is null");
+			}
+			
 			member = memberDao.exist(member.getEmail());
 			
 			if(member != null){
@@ -35,7 +42,7 @@ public class LogInController implements Controller, DataBinding{
 					System.out.println("LogInController Session is null");
 				}
 				session.setAttribute("member", member);
-				model.put("session", session);
+//				model.put("session", session);
 				
 				System.out.println("로그인 성공");
 				return "redirect:../member/list.do";
